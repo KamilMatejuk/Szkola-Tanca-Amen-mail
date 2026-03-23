@@ -1,20 +1,23 @@
 import { useState, useEffect } from 'react';
 import Editor from './components/Editor';
 import DraggableSection from './components/DraggableSection';
-
-const STORAGE_KEY = 'amen_mail_content';
+import { loadContent, saveContent } from './utils/storage';
 
 function App() {
   const [content, setContent] = useState<string>('');
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = loadContent();
     if (saved) setContent(saved);
   }, []);
 
+  useEffect(() => {
+    saveContent(content);
+  }, [content]);
+
   return (
     <div className="flex min-h-screen gap-4 p-4">
-      <div className="w-72 h-screen p-4 bg-white border border-gray-300 rounded">
+      <div className="w-72 h-[calc(100vh-32px)] p-4 bg-white border border-gray-300 rounded">
         <h2 className="text-lg font-semibold">Sekcje</h2>
         <p className="text-black text-sm mb-2">Złap i przeciągnij sekcje</p>
         <DraggableSection label="Baner" dragContent='<div class="section baner">Baner</div>' />
