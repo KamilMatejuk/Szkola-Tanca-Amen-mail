@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Editor from './components/Editor';
+import DraggableSection from './components/DraggableSection';
 
 const STORAGE_KEY = 'amen_mail_content';
 
@@ -16,97 +17,17 @@ function App() {
       <div className="w-72 h-screen p-4 bg-white border border-gray-300 rounded">
         <h2 className="text-lg font-semibold">Sekcje</h2>
         <p className="text-black text-sm mb-2">Złap i przeciągnij sekcje</p>
-        <div
-          className="bg-gray-200 rounded p-2 mb-2 cursor-grab"
-          draggable="true"
-          onDragStart={(e) => {
-            e.dataTransfer.setData(
-              'text/html',
-              '<div class="section baner">Baner</div>'
-            );
-          }}
-        >
-          Baner
-        </div>
-        <div
-          className="bg-gray-200 rounded p-2 mb-2 cursor-grab"
-          draggable="true"
-          onDragStart={(e) => {
-            e.dataTransfer.setData(
-              'text/html',
-              '<div class="section title">Tytuł</div>'
-            );
-          }}
-        >
-          Tytuł
-        </div>
-        <div
-          className="bg-gray-200 rounded p-2 mb-2 cursor-grab"
-          draggable="true"
-          onDragStart={(e) => {
-            e.dataTransfer.setData(
-              'text/html',
-              '<div class="section subtitle">Podtytuł</div>'
-            );
-          }}
-        >
-          Podtytuł
-        </div>
-        <div
-          className="bg-gray-200 rounded p-2 mb-2 cursor-grab"
-          draggable="true"
-          onDragStart={(e) => {
-            e.dataTransfer.setData(
-              'text/html',
-              '<div class="section text">Text</div>'
-            );
-          }}
-        >
-          Text
-        </div>
-        <div
-          className="bg-gray-200 rounded p-2 mb-2 cursor-grab"
-          draggable="true"
-          onDragStart={(e) => {
-            e.dataTransfer.setData(
-              'text/html',
-              '<hr class="section separator"/>'
-            );
-          }}
-        >
-          Separator
-        </div>
-        <div
-          className="bg-gray-200 rounded p-2 mb-2 cursor-grab"
-          draggable="true"
-          onDragStart={(e) => {
-            e.dataTransfer.setData(
-              'text/html',
-              '<div class="section signature">Podpis</div>'
-            );
-          }}
-        >
-          Podpis
-        </div>
+        <DraggableSection label="Baner" dragContent='<div class="section baner">Baner</div>' />
+        <DraggableSection label="Tytuł" dragContent='<div class="section title">Tytuł</div>' />
+        <DraggableSection label="Podtytuł" dragContent='<div class="section subtitle">Podtytuł</div>' />
+        <DraggableSection label="Text" dragContent='<div class="section text">Text</div>' />
+        <DraggableSection label="Separator" dragContent='<hr class="section separator"/>' />
+        <DraggableSection label="Podpis" dragContent='<div class="section signature">Podpis</div>' />
       </div>
       <div className="flex-1 flex flex-col items-center">
         <h1 className="text-2xl font-bold">Editor Maili</h1>
         <h2 className="text-sm text-black mt-1 mb-4">Szkoła Tańca Amen</h2>
-        <div className="w-[600px] p-4 bg-white border border-gray-300 rounded">
-          <div
-            className="w-full py-3 flex items-center justify-center text-sm text-gray-600 border-dashed border-2 border-gray-400 rounded cursor-pointer"
-            title="Drop a section here"
-            onDrop={(e) => {
-              e.preventDefault();
-              const html = e.dataTransfer.getData('text/html');
-              setContent((prev) => prev + html);
-            }}
-            onDragOver={(e) => e.preventDefault()}
-          >
-            Wybierz sekcję
-          </div>
-          <Editor value={content} onChange={setContent} />
-        </div>
+        <Editor value={content} onChange={setContent} />
       </div>
     </div>
   );
