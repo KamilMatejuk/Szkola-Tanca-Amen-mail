@@ -40,3 +40,13 @@ Follow this structure for new features. If you add a new feature, create a compo
 ---
 
 **If you plan to add source files, ensure they follow the conventions described above and update this document accordingly.**
+
+## Component Export Style
+
+For consistency, use the functional export syntax:
+```ts
+export default function ComponentName({ props }: PropsType) {
+  // component logic
+}
+```
+Avoid the `const Component: React.FC<...> = ...` pattern.
