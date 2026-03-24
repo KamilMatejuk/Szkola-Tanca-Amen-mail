@@ -1,8 +1,9 @@
+import { DragEvent } from "react";
 import { twMerge } from "tailwind-merge"
 
 interface DropZoneProps {
   isDragging: boolean;
-  onDrop: (e: React.DragEvent<HTMLDivElement>) => void;
+  onDrop: (e: DragEvent<HTMLDivElement>) => void;
 }
 
 export default function DropZone({ isDragging, onDrop }: DropZoneProps) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, SetStateAction, Dispatch } from 'react';
+import { useState, useEffect, SetStateAction, Dispatch, Fragment, DragEvent } from 'react';
 import { DndContext, closestCenter, useSensors, useSensor, PointerSensor, KeyboardSensor } from '@dnd-kit/core';
 import SortableSection from './SortableSection';
 import DropZone from './DropZone';
@@ -33,7 +33,7 @@ export default function Editor({ content, setContent }: EditorProps) {
     useSensor(KeyboardSensor)
   );
 
-  const handleDropAt = (index: number, e: React.DragEvent<HTMLDivElement>) => {
+  const handleDropAt = (index: number, e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const html = e.dataTransfer.getData('text/html');
     if (!html) return;
@@ -63,13 +63,13 @@ export default function Editor({ content, setContent }: EditorProps) {
           <>
             <DropZone onDrop={(e) => handleDropAt(0, e)} isDragging={isDragging || content.length == 0} />
             {content.map((section, idx) => (
-              <React.Fragment>
+              <Fragment>
                 <SortableSection
                   key={section.id}
                   content={section}
                 />
                 <DropZone onDrop={(e) => handleDropAt(idx + 1, e)} isDragging={isDragging} />
-              </React.Fragment>
+              </Fragment>
             ))}
           </>
         </SortableContext>
