@@ -18,7 +18,7 @@ export default function SortableSection({ content }: SortableSectionProps) {
     <div
       ref={setNodeRef}
       style={style}
-      className="border border-gray-300 rounded p-2 mb-2"
+      className="border border-gray-300 rounded p-2"
       dangerouslySetInnerHTML={{ __html: content.content }}
       {...attributes}
       {...listeners}

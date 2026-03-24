@@ -1,6 +1,7 @@
 import React, { useState, useEffect, SetStateAction, Dispatch } from 'react';
 import { DndContext, closestCenter, useSensors, useSensor, PointerSensor, KeyboardSensor } from '@dnd-kit/core';
 import SortableSection from './SortableSection';
+import DropZone from './DropZone';
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { MailContent } from '../utils/storage';
 import { v7 as uuidv7 } from 'uuid';
@@ -33,7 +34,6 @@ export default function Editor({ content, setContent }: EditorProps) {
   );
 
   const handleDropAt = (index: number, e: React.DragEvent<HTMLDivElement>) => {
-    console.log('Handle drop at', index)
     e.preventDefault();
     const html = e.dataTransfer.getData('text/html');
     if (!html) return;
@@ -58,38 +58,20 @@ export default function Editor({ content, setContent }: EditorProps) {
       collisionDetection={closestCenter}
       onDragEnd={(event) => handleDragEnd(event)}
     >
-      <div className="w-[600px] p-4 bg-white border border-gray-300 rounded">
+      <div className="w-[600px] p-4 bg-white border border-gray-300 rounded flex flex-col gap-[1px]">
         <SortableContext items={content.map(s => s.id)}>
-          <div>
-            {(content.length == 0 || isDragging) && (
-              <div
-                className="w-full py-3 flex items-center justify-center text-sm text-gray-600 border-dashed border-2 border-gray-400 rounded cursor-pointer"
-                title="Drop a section here"
-                onDrop={(e) => handleDropAt(0, e)}
-                onDragOver={(e) => e.preventDefault()}
-              >
-                Wybierz sekcję
-              </div>
-            )}
+          <>
+            <DropZone onDrop={(e) => handleDropAt(0, e)} isDragging={isDragging || content.length == 0} />
             {content.map((section, idx) => (
               <React.Fragment>
                 <SortableSection
                   key={section.id}
                   content={section}
                 />
-                {(
-                  <div
-                    className="w-full py-3 flex items-center justify-center text-sm text-gray-600 border-dashed border-2 border-gray-400 rounded cursor-pointer"
-                    title="Drop a section here"
-                    onDrop={(e) => handleDropAt(idx + 1, e)}
-                    onDragOver={(e) => e.preventDefault()}
-                  >
-                    Wybierz sekcję
-                  </div>
-                )}
+                <DropZone onDrop={(e) => handleDropAt(idx + 1, e)} isDragging={isDragging} />
               </React.Fragment>
             ))}
-          </div>
+          </>
         </SortableContext>
       </div>
     </DndContext>
