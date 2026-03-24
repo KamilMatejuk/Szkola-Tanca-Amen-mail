@@ -8,7 +8,7 @@ import Text from './sections/Text';
 import Separator from './sections/Separator';
 import Signature from './sections/Signature';
 
-const classes = { container: 'border border-gray-300 rounded p-2' };
+const classes = { container: 'border border-gray-100 p-1' };
 
 
 interface SortableSectionProps {
@@ -36,7 +36,7 @@ export default function SortableSection({ content }: SortableSectionProps) {
       case SectionType.Separator:
         return <Separator id={content.id} />;
       case SectionType.Signature:
-        return <Signature id={content.id} />;
+        return <Signature />;
       default:
         return null;
     }
