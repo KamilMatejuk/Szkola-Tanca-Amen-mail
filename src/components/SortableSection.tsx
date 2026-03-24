@@ -12,6 +12,7 @@ interface SortableSectionProps {
 export default function SortableSection({ id, content, onChange, sections }: SortableSectionProps) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
   const style = {
+    cursor: 'grab',
     transform: CSS.Transform.toString(transform),
     transition,
   };
