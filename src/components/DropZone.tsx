@@ -24,7 +24,7 @@ export default function DropZone({ isDragging, onDrop }: DropZoneProps) {
       onDrop={onDrop}
       onDragOver={(e) => e.preventDefault()}
     >
-      Upuść sekcję
+      {isDragging ? "Upuść sekcję" : ""}
     </div>
   );
 }

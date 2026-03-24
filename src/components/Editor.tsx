@@ -7,8 +7,6 @@ import { v7 as uuidv7 } from 'uuid';
 import { MailContent, SectionType } from '../utils/types';
 import { ContentContext } from '../context/ContentContext';
 
-const classes = { container: 'w-[600px] p-4 bg-white border border-gray-300 rounded flex flex-col gap-[1px]' };
-
 export default function Editor() {
   const { content, setContent } = useContext(ContentContext)!;
   const [isDragging, setIsDragging] = useState(false);
@@ -58,7 +56,16 @@ export default function Editor() {
       collisionDetection={closestCenter}
       onDragEnd={(event) => handleDragEnd(event)}
     >
-      <div id="editor-root" className={classes.container}>
+      <div id="editor-root" style={{
+        width: '600px',
+        padding: '16px',
+        backgroundColor: '#ffffff',
+        border: '1px solid #D1D5DB',
+        borderRadius: '4px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1px',
+      }}>
         <SortableContext items={content.map(s => s.id)}>
           <>
             <DropZone onDrop={(e) => handleDropAt(0, e)} isDragging={isDragging || content.length == 0} />
@@ -68,7 +75,10 @@ export default function Editor() {
                   key={section.id}
                   content={section}
                 />
-                <DropZone onDrop={(e) => handleDropAt(idx + 1, e)} isDragging={isDragging} />
+                <DropZone
+                  key={`drop-${idx}`}
+                  onDrop={(e) => handleDropAt(idx + 1, e)}
+                  isDragging={isDragging} />
               </Fragment>
             ))}
           </>
