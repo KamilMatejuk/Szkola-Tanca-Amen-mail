@@ -30,12 +30,32 @@ export default function Editor() {
     useSensor(KeyboardSensor)
   );
 
+  const createMailContent = (sectionType: SectionType) => {
+    const item = { type: sectionType, content: '', id: uuidv7() } as MailContent;
+    switch (sectionType) {
+      case SectionType.Banner:
+        return { ...item, content: '' };
+      case SectionType.Title:
+        return { ...item, content: 'Tytuł' };
+      case SectionType.Subtitle:
+        return { ...item, content: 'Podtytuł' };
+      case SectionType.Text:
+        return { ...item, content: 'Text' };
+      case SectionType.Separator:
+        return { ...item, content: 'both' };
+      case SectionType.Signature:
+        return item;
+      default:
+        return item;
+    }
+  }
+
   const handleDropAt = (index: number, e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const html = e.dataTransfer.getData('text/html');
     if (!html) return;
     const sectionType = html as SectionType;
-    const newSection = { type: sectionType, content: '', id: uuidv7() } as MailContent;
+    const newSection = createMailContent(sectionType);
     const newSections = [...content.slice(0, index), newSection, ...content.slice(index)];
     setContent(newSections);
   };
