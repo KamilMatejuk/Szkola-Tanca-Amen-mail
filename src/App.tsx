@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Editor from './components/Editor';
+import Actions from './components/Actions';
 import DraggableSection from './components/DraggableSection';
 import { loadContent, MailContent, saveContent } from './utils/storage';
 
@@ -41,6 +42,7 @@ function App() {
         <h2 className={classes.editorSubtitle}>Szkoła Tańca Amen</h2>
         <Editor content={content} setContent={setContent} />
       </div>
+      <Actions />
     </div>
   );
 }
