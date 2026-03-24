@@ -58,7 +58,7 @@ export default function Editor() {
       collisionDetection={closestCenter}
       onDragEnd={(event) => handleDragEnd(event)}
     >
-      <div className={classes.container}>
+      <div id="editor-root" className={classes.container}>
         <SortableContext items={content.map(s => s.id)}>
           <>
             <DropZone onDrop={(e) => handleDropAt(0, e)} isDragging={isDragging || content.length == 0} />
