@@ -1,19 +1,16 @@
-import { useState, useEffect, SetStateAction, Dispatch, Fragment, DragEvent } from 'react';
+import { useState, useEffect, Fragment, DragEvent, useContext } from 'react';
 import { DndContext, closestCenter, useSensors, useSensor, PointerSensor, KeyboardSensor } from '@dnd-kit/core';
 import SortableSection from './SortableSection';
 import DropZone from './DropZone';
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { v7 as uuidv7 } from 'uuid';
 import { MailContent, SectionType } from '../utils/types';
+import { ContentContext } from '../context/ContentContext';
 
 const classes = { container: 'w-[600px] p-4 bg-white border border-gray-300 rounded flex flex-col gap-[1px]' };
 
-interface EditorProps {
-  content: MailContent[];
-  setContent: Dispatch<SetStateAction<MailContent[]>>;
-}
-
-export default function Editor({ content, setContent }: EditorProps) {
+export default function Editor() {
+  const { content, setContent } = useContext(ContentContext)!;
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {

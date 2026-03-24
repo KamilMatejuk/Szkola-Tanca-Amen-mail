@@ -19,7 +19,3 @@ export const loadContent = (): MailContent[] | null => {
 export const saveContent = (contents: MailContent[]): void => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(contents));
 };
-
-export const clearContent = (): void => {
-  localStorage.removeItem(STORAGE_KEY);
-};

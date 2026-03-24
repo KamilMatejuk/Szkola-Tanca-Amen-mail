@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Editor from './components/Editor';
+import { ContentContext } from './context/ContentContext';
 import Actions from './components/Actions';
 import DraggableSection from './components/DraggableSection';
 import { loadContent, saveContent } from './utils/storage';
@@ -27,24 +28,26 @@ function App() {
   }, [content]);
 
   return (
-    <div className={classes.root}>
-      <div className={classes.sidebar}>
-        <h2 className={classes.sectionHeader}>Sekcje</h2>
-        <p className={classes.sectionDescription}>Złap i przeciągnij sekcje</p>
-        <DraggableSection label={SectionType.Banner} />
-        <DraggableSection label={SectionType.Title} />
-        <DraggableSection label={SectionType.Subtitle} />
-        <DraggableSection label={SectionType.Text} />
-        <DraggableSection label={SectionType.Separator} />
-        <DraggableSection label={SectionType.Signature} />
+    <ContentContext.Provider value={{content, setContent}}>
+      <div className={classes.root}>
+        <div className={classes.sidebar}>
+          <h2 className={classes.sectionHeader}>Sekcje</h2>
+          <p className={classes.sectionDescription}>Złap i przeciągnij sekcje</p>
+          <DraggableSection label={SectionType.Banner} />
+          <DraggableSection label={SectionType.Title} />
+          <DraggableSection label={SectionType.Subtitle} />
+          <DraggableSection label={SectionType.Text} />
+          <DraggableSection label={SectionType.Separator} />
+          <DraggableSection label={SectionType.Signature} />
+        </div>
+        <div className={classes.editorContainer}>
+          <h1 className={classes.editorTitle}>Editor Maili</h1>
+          <h2 className={classes.editorSubtitle}>Szkoła Tańca Amen</h2>
+          <Editor />
+        </div>
+        <Actions />
       </div>
-      <div className={classes.editorContainer}>
-        <h1 className={classes.editorTitle}>Editor Maili</h1>
-        <h2 className={classes.editorSubtitle}>Szkoła Tańca Amen</h2>
-        <Editor content={content} setContent={setContent} />
-      </div>
-      <Actions />
-    </div>
+    </ContentContext.Provider>
   );
 }
 
