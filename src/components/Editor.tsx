@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, SetStateAction, Dispatch } from 'react';
 import { DndContext, closestCenter, useSensors, useSensor, PointerSensor, KeyboardSensor } from '@dnd-kit/core';
 import SortableSection from './SortableSection';
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { MailContent } from '../utils/storage';
+import { v7 as uuidv7 } from 'uuid';
 
 interface EditorProps {
-  value: MailContent[];
-  onChange: (value: MailContent[]) => void;
+  content: MailContent[];
+  setContent: Dispatch<SetStateAction<MailContent[]>>;
 }
 
-export default function Editor({value, onChange}: EditorProps) {
+export default function Editor({ content, setContent }: EditorProps) {
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
@@ -26,45 +27,29 @@ export default function Editor({value, onChange}: EditorProps) {
     };
   }, []);
 
-  const [sections, setSections] = useState<Array<{ id: string; content: string }>>([]);
-
-  useEffect(() => {
-    if (value && value.length > 0) {
-      const newSections = value.map((item) => ({ id: item.content, content: item.content }));
-      setSections(newSections);
-    } else {
-      setSections([]);
-    }
-  }, [value]);
-
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor)
   );
 
-  const handleExternalDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDropAt = (index: number, e: React.DragEvent<HTMLDivElement>) => {
+    console.log('Handle drop at', index)
     e.preventDefault();
     const html = e.dataTransfer.getData('text/html');
     if (!html) return;
-    const newSections = [...sections, { id: html, content: html }];
-    setSections(newSections);
-    onChange(newSections.map(s => ({ type: 'html', content: s.id })));
+    const newSection = { type: html, content: html, id: uuidv7() } as MailContent;
+    const newSections = [...content.slice(0, index), newSection, ...content.slice(index)];
+    setContent(newSections);
   };
-
-  const handleSectionsChange = (newSections: Array<{ id: string; content: string }>) => {
-    setSections(newSections);
-    onChange(newSections.map(s => ({ type: 'html', content: s.id })));
-  };
-
 
   const handleDragEnd = ({ active, over }: { active: any; over: any }) => {
     if (!over || active.id === over.id) return;
-    const oldIndex = sections.findIndex((s) => s.id === active.id);
-    const newIndex = sections.findIndex((s) => s.id === over.id);
+    const oldIndex = content.findIndex((c) => c.id === active.id);
+    const newIndex = content.findIndex((c) => c.id === over.id);
+    console.log('drag end', oldIndex, newIndex)
     if (oldIndex < 0 || newIndex < 0) return;
-    const newSections = arrayMove(sections, oldIndex, newIndex);
-    setSections(newSections);
-    onChange(newSections.map(s => ({ type: 'html', content: s.id })));
+    const newSections = arrayMove(content, oldIndex, newIndex);
+    setContent(newSections);
   };
 
   return (
@@ -74,27 +59,36 @@ export default function Editor({value, onChange}: EditorProps) {
       onDragEnd={(event) => handleDragEnd(event)}
     >
       <div className="w-[600px] p-4 bg-white border border-gray-300 rounded">
-        <SortableContext items={sections.map(s => s.id)}>
+        <SortableContext items={content.map(s => s.id)}>
           <div>
-            {sections.map((section) => (
-              <SortableSection
-                key={section.id}
-                id={section.id}
-                content={section.content}
-                sections={sections}
-                onChange={handleSectionsChange}
-              />
-            ))}
-            {(sections.length == 0 || isDragging) && (
+            {(content.length == 0 || isDragging) && (
               <div
                 className="w-full py-3 flex items-center justify-center text-sm text-gray-600 border-dashed border-2 border-gray-400 rounded cursor-pointer"
                 title="Drop a section here"
-                onDrop={handleExternalDrop}
+                onDrop={(e) => handleDropAt(0, e)}
                 onDragOver={(e) => e.preventDefault()}
               >
                 Wybierz sekcję
               </div>
             )}
+            {content.map((section, idx) => (
+              <React.Fragment>
+                <SortableSection
+                  key={section.id}
+                  content={section}
+                />
+                {(
+                  <div
+                    className="w-full py-3 flex items-center justify-center text-sm text-gray-600 border-dashed border-2 border-gray-400 rounded cursor-pointer"
+                    title="Drop a section here"
+                    onDrop={(e) => handleDropAt(idx + 1, e)}
+                    onDragOver={(e) => e.preventDefault()}
+                  >
+                    Wybierz sekcję
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
           </div>
         </SortableContext>
       </div>

@@ -30,7 +30,7 @@ function App() {
       <div className="flex-1 flex flex-col items-center">
         <h1 className="text-2xl font-bold">Editor Maili</h1>
         <h2 className="text-sm text-black mt-1 mb-4">Szkoła Tańca Amen</h2>
-        <Editor value={content} onChange={setContent} />
+        <Editor content={content} setContent={setContent} />
       </div>
     </div>
   );
