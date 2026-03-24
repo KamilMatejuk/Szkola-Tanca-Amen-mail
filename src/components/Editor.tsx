@@ -3,11 +3,10 @@ import { DndContext, closestCenter, useSensors, useSensor, PointerSensor, Keyboa
 import SortableSection from './SortableSection';
 import DropZone from './DropZone';
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
+import { v7 as uuidv7 } from 'uuid';
+import { MailContent, SectionType } from '../utils/types';
 
 const classes = { container: 'w-[600px] p-4 bg-white border border-gray-300 rounded flex flex-col gap-[1px]' };
-
-import { MailContent } from '../utils/storage';
-import { v7 as uuidv7 } from 'uuid';
 
 interface EditorProps {
   content: MailContent[];
@@ -40,7 +39,8 @@ export default function Editor({ content, setContent }: EditorProps) {
     e.preventDefault();
     const html = e.dataTransfer.getData('text/html');
     if (!html) return;
-    const newSection = { type: html, content: html, id: uuidv7() } as MailContent;
+    const sectionType = html as SectionType;
+    const newSection = { type: sectionType, content: '', id: uuidv7() } as MailContent;
     const newSections = [...content.slice(0, index), newSection, ...content.slice(index)];
     setContent(newSections);
   };

@@ -1,6 +1,12 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { MailContent } from '../utils/storage';
+import { MailContent, SectionType } from '../utils/types';
+import Banner from './sections/Banner';
+import Title from './sections/Title';
+import Subtitle from './sections/Subtitle';
+import Text from './sections/Text';
+import Separator from './sections/Separator';
+import Signature from './sections/Signature';
 
 const classes = { container: 'border border-gray-300 rounded p-2' };
 
@@ -17,14 +23,34 @@ export default function SortableSection({ content }: SortableSectionProps) {
     transition,
   };
 
+  const renderedContent = (() => {
+    switch (content.type) {
+      case SectionType.Banner:
+        return <Banner id={content.id} />;
+      case SectionType.Title:
+        return <Title id={content.id} />;
+      case SectionType.Subtitle:
+        return <Subtitle id={content.id} />;
+      case SectionType.Text:
+        return <Text id={content.id} />;
+      case SectionType.Separator:
+        return <Separator id={content.id} />;
+      case SectionType.Signature:
+        return <Signature id={content.id} />;
+      default:
+        return null;
+    }
+  })();
+
   return (
     <div
       ref={setNodeRef}
       style={style}
       className={classes.container}
-      dangerouslySetInnerHTML={{ __html: content.content }}
       {...attributes}
       {...listeners}
-    />
+    >
+      {renderedContent}
+    </div>
   );
 };
