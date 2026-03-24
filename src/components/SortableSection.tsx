@@ -2,6 +2,9 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { MailContent } from '../utils/storage';
 
+const classes = { container: 'border border-gray-300 rounded p-2' };
+
+
 interface SortableSectionProps {
   content: MailContent;
 }
@@ -18,7 +21,7 @@ export default function SortableSection({ content }: SortableSectionProps) {
     <div
       ref={setNodeRef}
       style={style}
-      className="border border-gray-300 rounded p-2"
+      className={classes.container}
       dangerouslySetInnerHTML={{ __html: content.content }}
       {...attributes}
       {...listeners}

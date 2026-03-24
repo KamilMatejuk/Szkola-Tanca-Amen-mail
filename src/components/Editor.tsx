@@ -3,6 +3,9 @@ import { DndContext, closestCenter, useSensors, useSensor, PointerSensor, Keyboa
 import SortableSection from './SortableSection';
 import DropZone from './DropZone';
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
+
+const classes = { container: 'w-[600px] p-4 bg-white border border-gray-300 rounded flex flex-col gap-[1px]' };
+
 import { MailContent } from '../utils/storage';
 import { v7 as uuidv7 } from 'uuid';
 
@@ -58,7 +61,7 @@ export default function Editor({ content, setContent }: EditorProps) {
       collisionDetection={closestCenter}
       onDragEnd={(event) => handleDragEnd(event)}
     >
-      <div className="w-[600px] p-4 bg-white border border-gray-300 rounded flex flex-col gap-[1px]">
+      <div className={classes.container}>
         <SortableContext items={content.map(s => s.id)}>
           <>
             <DropZone onDrop={(e) => handleDropAt(0, e)} isDragging={isDragging || content.length == 0} />

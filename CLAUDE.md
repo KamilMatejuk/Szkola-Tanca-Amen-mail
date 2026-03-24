@@ -41,12 +41,30 @@ Follow this structure for new features. If you add a new feature, create a compo
 
 **If you plan to add source files, ensure they follow the conventions described above and update this document accordingly.**
 
-## Component Export Style
+## React Component Style
 
-For consistency, use the functional export syntax:
+### Component Export
+Use the functional export syntax:
 ```ts
 export default function ComponentName({ props }: PropsType) {
   // component logic
 }
 ```
-Avoid the `const Component: React.FC<...> = ...` pattern.
+Avoid the `const Component: React.FC<...> = ...` & `export default Component;` pattern.
+
+### React import
+Dont use React as a standalone import.
+Istead of using `React.Fragment`, use `import { Fragment } from React`
+
+### Styling
+Instead of inline styles in `className`, define one object on top of file
+```ts
+const classes = {
+  container: "...",
+  ...
+}
+```
+and referance it in html, like this `className={classes.container}`.
+Try to group styles by similarities, to reuse most of the classes.
+Use meaningfull class names.
+Use `twMerge` from `tailwind-merge` to combine classes, if necessary.
