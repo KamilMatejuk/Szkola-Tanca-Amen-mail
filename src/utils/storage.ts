@@ -1,10 +1,21 @@
 const STORAGE_KEY = 'amen_mail_content';
 
-export const loadContent = (): string | null => {
+export type MailContent = { type: string; content: string };
+
+export const loadContent = (): MailContent[] | null => {
   const saved = localStorage.getItem(STORAGE_KEY);
-  return saved;
+  if (!saved) return null;
+  try {
+    const parsed = JSON.parse(saved);
+    if (Array.isArray(parsed)) {
+      return parsed;
+    }
+    return null;
+  } catch {
+    return null;
+  }
 };
 
-export const saveContent = (content: string): void => {
-  localStorage.setItem(STORAGE_KEY, content);
+export const saveContent = (contents: MailContent[]): void => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(contents));
 };

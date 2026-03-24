@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import Editor from './components/Editor';
 import DraggableSection from './components/DraggableSection';
-import { loadContent, saveContent } from './utils/storage';
+import { loadContent, MailContent, saveContent } from './utils/storage';
 
 function App() {
-  const [content, setContent] = useState<string>('');
+  const [content, setContent] = useState<MailContent[]>([]);
 
   useEffect(() => {
     const saved = loadContent();

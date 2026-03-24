@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { DndContext, closestCenter, useSensors, useSensor, PointerSensor, KeyboardSensor } from '@dnd-kit/core';
 import SortableSection from './SortableSection';
 import { SortableContext, arrayMove } from '@dnd-kit/sortable';
+import { MailContent } from '../utils/storage';
 
 interface EditorProps {
-  value: string;
-  onChange: (value: string) => void;
+  value: MailContent[];
+  onChange: (value: MailContent[]) => void;
 }
 
 export default function Editor({value, onChange}: EditorProps) {
@@ -28,8 +29,8 @@ export default function Editor({value, onChange}: EditorProps) {
   const [sections, setSections] = useState<Array<{ id: string; content: string }>>([]);
 
   useEffect(() => {
-    if (value) {
-      const newSections = value.split('\n\n').filter(Boolean).map((content) => ({ id: content, content: content }));
+    if (value && value.length > 0) {
+      const newSections = value.map((item) => ({ id: item.content, content: item.content }));
       setSections(newSections);
     } else {
       setSections([]);
@@ -47,12 +48,12 @@ export default function Editor({value, onChange}: EditorProps) {
     if (!html) return;
     const newSections = [...sections, { id: html, content: html }];
     setSections(newSections);
-    onChange(newSections.map(s => s.id).join('\n\n'));
+    onChange(newSections.map(s => ({ type: 'html', content: s.id })));
   };
 
   const handleSectionsChange = (newSections: Array<{ id: string; content: string }>) => {
     setSections(newSections);
-    onChange(newSections.map(s => s.id).join('\n\n'));
+    onChange(newSections.map(s => ({ type: 'html', content: s.id })));
   };
 
 
@@ -63,7 +64,7 @@ export default function Editor({value, onChange}: EditorProps) {
     if (oldIndex < 0 || newIndex < 0) return;
     const newSections = arrayMove(sections, oldIndex, newIndex);
     setSections(newSections);
-    onChange(newSections.map(s => s.id).join('\n\n'));
+    onChange(newSections.map(s => ({ type: 'html', content: s.id })));
   };
 
   return (
