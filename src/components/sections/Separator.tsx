@@ -12,9 +12,9 @@ const separatorStyle: CSSProperties = {
 
 }
 
-export default function Separator() {
+export default function Separator({ id }: { id: string }) {
   const { content } = useContext(ContentContext)!;
-  const item = content.find((item) => item.type === SectionType.Separator);
+  const item = content.find((item) => item.id === id);
   const variant = item?.content?.toLowerCase();
   const showTop = variant !== 'bottom';
   const showBottom = variant !== 'top';

@@ -93,7 +93,7 @@ export default function Editor() {
               <Fragment key={section.id}>
                 <SortableSection
                   key={section.id}
-                  content={section}
+                  item={section}
                 />
                 <DropZone
                   key={`drop-${idx}`}
