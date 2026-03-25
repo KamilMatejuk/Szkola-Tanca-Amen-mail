@@ -89,8 +89,8 @@ export default function Editor() {
         <SortableContext items={content.map(s => s.id)}>
           <>
             <DropZone onDrop={(e) => handleDropAt(0, e)} isDragging={isDragging || content.length == 0} />
-            {content.map((section, idx) => (
-              <Fragment>
+            {content.flatMap((section, idx) => (
+              <Fragment key={section.id}>
                 <SortableSection
                   key={section.id}
                   content={section}
