@@ -40,7 +40,7 @@ export default function Editor() {
       case SectionType.Subtitle:
         return { ...item, content: 'Podtytuł' };
       case SectionType.Text:
-        return { ...item, content: 'Text' };
+        return { ...item, content: 'Paragraf' };
       case SectionType.Separator:
         return { ...item, content: 'both' };
       case SectionType.Signature:

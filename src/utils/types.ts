@@ -2,7 +2,7 @@ export enum SectionType {
   Banner = 'Baner',
   Title = 'Tytuł',
   Subtitle = 'Podtytuł',
-  Text = 'Text',
+  Text = 'Paragraf',
   Separator = 'Separator',
   Signature = 'Podpis',
 }
