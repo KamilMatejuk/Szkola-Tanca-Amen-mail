@@ -7,6 +7,8 @@ import Subtitle from './sections/Subtitle';
 import Text from './sections/Text';
 import Separator from './sections/Separator';
 import Signature from './sections/Signature';
+import { GoGrabber } from "react-icons/go";
+import { CSSProperties } from 'react';
 
 const classes = { container: 'border border-gray-100 p-1' };
 
@@ -17,8 +19,8 @@ interface SortableSectionProps {
 
 export default function SortableSection({ content }: SortableSectionProps) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: content.id });
-  const style = {
-    cursor: 'grab',
+  const style: CSSProperties = {
+    position: 'relative',
     transform: CSS.Transform.toString(transform),
     transition,
   };
@@ -48,8 +50,8 @@ export default function SortableSection({ content }: SortableSectionProps) {
       style={style}
       className={classes.container}
       {...attributes}
-      {...listeners}
     >
+      <GoGrabber {...listeners} size={32} className="drag-handle absolute top-1/2 -translate-y-1/2 -left-12 cursor-grab" />
       {renderedContent}
     </div>
   );
