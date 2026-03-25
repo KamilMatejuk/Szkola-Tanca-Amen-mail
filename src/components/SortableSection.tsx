@@ -3,7 +3,6 @@ import { CSS } from '@dnd-kit/utilities';
 import { MailContent, SectionType } from '../utils/types';
 import Banner from './sections/Banner';
 import Title from './sections/Title';
-import Subtitle from './sections/Subtitle';
 import Text from './sections/Text';
 import Separator from './sections/Separator';
 import Signature from './sections/Signature';
@@ -19,9 +18,9 @@ function getRenderedContent(content: MailContent) {
     case SectionType.Banner:
       return <Banner id={content.id} />;
     case SectionType.Title:
-      return <Title id={content.id} />;
+      return <Title id={content.id} level="title" />
     case SectionType.Subtitle:
-      return <Subtitle id={content.id} />;
+      return <Title id={content.id} level="subtitle" />
     case SectionType.Text:
       return <Text id={content.id} />;
     case SectionType.Separator:
@@ -44,8 +43,8 @@ function getActions(item: MailContent, setContent: Dispatch<SetStateAction<MailC
         {
           Icon: BiRotateRight,
           action: () => {
-            const next = {'top': 'bottom', 'bottom': 'both', 'both': 'top'}[item.content] || 'both';
-            setContent((prev) => prev.map(i => i.id == item.id ? {...i, content: next} : i))
+            const next = { 'top': 'bottom', 'bottom': 'both', 'both': 'top' }[item.content] || 'both';
+            setContent((prev) => prev.map(i => i.id == item.id ? { ...i, content: next } : i))
           },
         },
       ];
