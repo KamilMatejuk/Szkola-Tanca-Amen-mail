@@ -19,3 +19,4 @@ npm run build
 ```
 
 The built files are in `dist/` and can be published to GitHub Pages.
+
