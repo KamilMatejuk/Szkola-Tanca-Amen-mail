@@ -6,6 +6,7 @@ import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { v7 as uuidv7 } from 'uuid';
 import { MailContent, SectionType } from '../utils/types';
 import { ContentContext } from '../context/ContentContext';
+import { DEFAULT_BANNER_BASE64 } from '../assets/banner';
 
 export default function Editor() {
   const { content, setContent } = useContext(ContentContext)!;
@@ -34,7 +35,7 @@ export default function Editor() {
     const item = { type: sectionType, content: '', id: uuidv7() } as MailContent;
     switch (sectionType) {
       case SectionType.Banner:
-        return { ...item, content: '' };
+        return { ...item, content: DEFAULT_BANNER_BASE64 };
       case SectionType.Title:
         return { ...item, content: 'Tytuł' };
       case SectionType.Subtitle:
