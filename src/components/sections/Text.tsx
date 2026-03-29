@@ -3,6 +3,7 @@ import { ContentContext } from '../../context/ContentContext';
 import { SectionType } from '../../utils/types';
 import ReactQuill, { Quill } from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
+import { ExportContext } from '../../context/ExportContext';
 
 // @ts-ignore (unknown type - ts 2507)
 class CustomLink extends Quill.import('formats/link') {
@@ -17,6 +18,7 @@ Quill.register(CustomLink, true);
 
 
 export default function Text({ id }: { id: string }) {
+  const { isExporting } = useContext(ExportContext)!;
   const { content, setContent } = useContext(ContentContext)!;
   const textItem = content.find((item) => item.id === id);
   const [value, setValue] = useState(textItem?.content || '');
@@ -52,11 +54,12 @@ export default function Text({ id }: { id: string }) {
 
   return (
     <div id={`quill-container-${id}`}>
-      <ReactQuill
+      <ReactQuill style={{fontSize: '12px'}}
         value={value}
         onChange={handleChange}
         theme="snow"
-        modules={modules}
+        readOnly={isExporting}
+        modules={isExporting ? { toolbar: null } : modules}
         formats={formats}
         bounds={`#quill-container-${id}`}
       />

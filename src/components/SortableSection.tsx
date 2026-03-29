@@ -13,6 +13,8 @@ import { MdUploadFile } from "react-icons/md";
 import { CSSProperties, Dispatch, SetStateAction, useContext } from 'react';
 import { ContentContext } from '../context/ContentContext';
 import { BANNER_WIDTH } from '../assets/banner';
+import { ExportContext } from '../context/ExportContext';
+import { twMerge } from 'tailwind-merge';
 
 
 function getRenderedContent(content: MailContent) {
@@ -97,6 +99,7 @@ interface SortableSectionProps {
 }
 
 export default function SortableSection({ item }: SortableSectionProps) {
+  const { isExporting } = useContext(ExportContext)!;
   const { setContent } = useContext(ContentContext)!;
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: item.id });
   const style: CSSProperties = {
@@ -112,16 +115,20 @@ export default function SortableSection({ item }: SortableSectionProps) {
     <div
       ref={setNodeRef}
       style={style}
-      className="border border-gray-100 p-1"
+      className={twMerge(!isExporting && "border border-gray-100 p-1")}
       {...attributes}
     >
-      <GoGrabber {...listeners} size={32} className="absolute top-1/2 -translate-y-1/2 left-[-50px] cursor-grab" />
+      {!isExporting && (
+        <GoGrabber {...listeners} size={32} className="absolute top-1/2 -translate-y-1/2 left-[-50px] cursor-grab" />
+      )}
       {renderedContent}
-      <div className="absolute top-1/2 -translate-y-1/2 left-[590px] cursor-pointer text-gray-400 flex  gap-1">
-        {extraActions.map(({ Icon, action }, idx) => (
-          <Icon key={idx} size={20} onClick={action} />
-        ))}
-      </div>
+      {!isExporting && (
+        <div className="absolute top-1/2 -translate-y-1/2 left-[590px] cursor-pointer text-gray-400 flex  gap-1">
+          {extraActions.map(({ Icon, action }, idx) => (
+            <Icon key={idx} size={20} onClick={action} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

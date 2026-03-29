@@ -6,10 +6,12 @@ import { SortableContext, arrayMove } from '@dnd-kit/sortable';
 import { v7 as uuidv7 } from 'uuid';
 import { MailContent, SectionType } from '../utils/types';
 import { ContentContext } from '../context/ContentContext';
-import { DEFAULT_BANNER_BASE64 } from '../assets/banner';
+import { BANNER_WIDTH, DEFAULT_BANNER_BASE64 } from '../assets/banner';
+import { ExportContext } from '../context/ExportContext';
 
 export default function Editor() {
   const { content, setContent } = useContext(ContentContext)!;
+  const { isExporting } = useContext(ExportContext)!;
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
@@ -78,10 +80,12 @@ export default function Editor() {
       onDragEnd={(event) => handleDragEnd(event)}
     >
       <div id="editor-root" style={{
-        width: '600px',
-        padding: '16px',
+        boxSizing: 'border-box',
+        margin: isExporting ? 'auto' : '',
+        width: isExporting ? `${BANNER_WIDTH}px` : '600px',
+        padding: isExporting ? '0px' : '16px',
         backgroundColor: '#ffffff',
-        border: '1px solid #D1D5DB',
+        border: isExporting ? '' : '1px solid #D1D5DB',
         borderRadius: '4px',
         display: 'flex',
         flexDirection: 'column',

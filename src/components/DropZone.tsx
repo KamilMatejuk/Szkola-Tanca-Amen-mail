@@ -1,5 +1,6 @@
-import { DragEvent } from "react";
+import { DragEvent, useContext } from "react";
 import { twMerge } from "tailwind-merge"
+import { ExportContext } from "../context/ExportContext";
 
 const classes = {
   base: twMerge(
@@ -18,7 +19,8 @@ interface DropZoneProps {
 }
 
 export default function DropZone({ isDragging, onDrop }: DropZoneProps) {
-  return (
+  const { isExporting } = useContext(ExportContext)!;
+  return isExporting ? null : (
     <div
       className={twMerge(classes.base, isDragging ? classes.dragging : classes.notDragging)}
       onDrop={onDrop}
