@@ -10,7 +10,7 @@ import { Toaster } from 'react-hot-toast';
 
 const classes = {
   root: "flex min-h-screen gap-4 p-4",
-  sidebar: "w-72 h-[calc(100vh-32px)] p-4 bg-white border border-gray-300 rounded",
+  sidebar: "w-72 h-fit p-4 bg-white border border-gray-300 rounded sticky top-4 left-4",
   sectionHeader: "text-lg font-semibold",
   sectionDescription: "text-black text-sm mb-2",
   editorContainer: "flex-1 flex flex-col items-center",

@@ -24,7 +24,7 @@ export default function Actions() {
   }, [isExporting]);
 
   return (
-    <div className="flex flex-col items-end space-y-2 absolute top-4 right-4">
+    <div className="h-fit flex flex-col items-end space-y-2 sticky top-4 right-4">
       <Action label="info" Icon={AiOutlineInfoCircle} onClick={() => toast('test')} />
       <Action label="clear" Icon={AiOutlineDelete} onClick={() => setContent([])} />
       <Action label="export" Icon={AiOutlineSend} onClick={() => setIsExporting(true)} />
