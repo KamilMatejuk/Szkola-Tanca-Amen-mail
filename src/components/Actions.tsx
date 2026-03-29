@@ -15,6 +15,10 @@ export default function Actions() {
     // remove the Quill tooltip (src/components/sections/Text.tsx)
     const editorClone = editor!.cloneNode(true) as HTMLElement;
     editorClone.querySelectorAll('.ql-tooltip').forEach((el) => el.remove());
+    // Remove empty <p> tags
+    editorClone.querySelectorAll('p').forEach((p) => {
+      if (!p.textContent?.trim()) p.remove();
+    });
     const html = editorClone.outerHTML;
     setIsExporting(false);
     navigator.clipboard
