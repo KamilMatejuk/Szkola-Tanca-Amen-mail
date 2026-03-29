@@ -6,6 +6,7 @@ import DraggableSection from './components/DraggableSection';
 import { loadContent, saveContent } from './utils/storage';
 import { MailContent, SectionType } from './utils/types';
 import { ExportContext } from './context/ExportContext';
+import { Toaster } from 'react-hot-toast';
 
 const classes = {
   root: "flex min-h-screen gap-4 p-4",
@@ -33,6 +34,7 @@ function App() {
     <ContentContext.Provider value={{ content, setContent }}>
       <ExportContext.Provider value={{ isExporting, setIsExporting }}>
         <div className={classes.root}>
+          <Toaster position="top-right" />
           <div className={classes.sidebar}>
             <h2 className={classes.sectionHeader}>Sekcje</h2>
             <p className={classes.sectionDescription}>Złap i przeciągnij sekcje</p>
