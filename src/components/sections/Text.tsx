@@ -44,11 +44,7 @@ export default function Text({ id }: { id: string }) {
   const handleChange = (html: string) => {
     setValue(html);
     if (textItem) {
-      setContent((prev) =>
-        prev.map((item) =>
-          item.type === SectionType.Text ? { ...item, content: html } : item
-        )
-      );
+      setContent((prev) => prev.map((item) => item.id === id ? { ...item, content: html } : item));
     }
   };
 

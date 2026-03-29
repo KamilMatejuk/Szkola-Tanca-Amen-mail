@@ -35,9 +35,7 @@ export default function Title({ id, level }: { id: string, level: 'title' | 'sub
     const newText = e.currentTarget.textContent || '';
     lastVersion.current = newText;
     if (titleItem) {
-      setContent(prev => prev.map(item =>
-        item.type === SectionType.Title ? { ...item, content: newText } : item
-      ));
+      setContent(prev => prev.map(item => item.id === id ? { ...item, content: newText } : item));
     }
   };
 
