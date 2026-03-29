@@ -79,7 +79,7 @@ export default function Editor() {
       collisionDetection={closestCenter}
       onDragEnd={(event) => handleDragEnd(event)}
     >
-      <div id="editor-root" style={{
+      <table id="editor-root" style={{
         boxSizing: 'border-box',
         margin: isExporting ? 'auto' : '',
         width: isExporting ? `${BANNER_WIDTH}px` : '600px',
@@ -108,7 +108,7 @@ export default function Editor() {
             ))}
           </>
         </SortableContext>
-      </div>
+      </table>
     </DndContext>
   );
 };

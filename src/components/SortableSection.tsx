@@ -112,7 +112,7 @@ export default function SortableSection({ item }: SortableSectionProps) {
   const extraActions = getActions(item, setContent);
 
   return (
-    <div
+    <table
       ref={setNodeRef}
       style={style}
       className={twMerge(!isExporting && "border border-gray-100 p-1")}
@@ -123,12 +123,12 @@ export default function SortableSection({ item }: SortableSectionProps) {
       )}
       {renderedContent}
       {!isExporting && (
-        <div className="absolute top-1/2 -translate-y-1/2 left-[590px] cursor-pointer text-gray-400 flex  gap-1">
+        <table className="absolute top-1/2 -translate-y-1/2 left-[590px] cursor-pointer text-gray-400 flex  gap-1">
           {extraActions.map(({ Icon, action }, idx) => (
             <Icon key={idx} size={20} onClick={action} />
           ))}
-        </div>
+        </table>
       )}
-    </div>
+    </table>
   );
 };

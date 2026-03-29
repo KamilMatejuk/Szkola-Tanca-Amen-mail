@@ -15,18 +15,18 @@ const classes = {
 
 interface DropZoneProps {
   isDragging: boolean;
-  onDrop: (e: DragEvent<HTMLDivElement>) => void;
+  onDrop: (e: DragEvent<HTMLTableElement>) => void;
 }
 
 export default function DropZone({ isDragging, onDrop }: DropZoneProps) {
   const { isExporting } = useContext(ExportContext)!;
   return isExporting ? null : (
-    <div
+    <table
       className={twMerge(classes.base, isDragging ? classes.dragging : classes.notDragging)}
       onDrop={onDrop}
       onDragOver={(e) => e.preventDefault()}
     >
       {isDragging ? "Upuść sekcję" : ""}
-    </div>
+    </table>
   );
 }

@@ -28,7 +28,7 @@ const iconStyle: CSSProperties = {
 
 export default function Signature() {
   return (
-    <div
+    <table
       style={{
         height: '208px',
         position: 'relative',
@@ -47,13 +47,13 @@ export default function Signature() {
         filter: 'brightness(0) invert(1)'
       }} />
       {/* text */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'white', fontSize: '14px' }}>
+      <table style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', color: 'white', fontSize: '14px' }}>
         <p style={{ margin: 0 }}>Ściskamy i pozdrawiamy!</p>
         <p style={{ margin: 0 }}>Chrześcijańska Szkoła Tańca</p>
         <img width={60} src='https://chrzescijanskaszkolatanca.pl/wp-content/uploads/2022/04/logo_white_amen_trimmed-163x99.png' />
-      </div>
+      </table>
       {/* icons */}
-      <div style={iconRowStyle}>
+      <table style={iconRowStyle}>
         <span style={iconWrapperStyle}>
           <a style={iconStyle} href="https://www.facebook.com/szkolaamen" target="_blank" rel="noopener noreferrer">
             <FaFacebook className="text-white" size={20} />
@@ -74,7 +74,7 @@ export default function Signature() {
             <FaGlobe className="text-white" size={20} />
           </a>
         </span>
-      </div>
-    </div>
+      </table>
+    </table>
   );
 }
