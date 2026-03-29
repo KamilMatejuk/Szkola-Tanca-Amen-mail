@@ -18,10 +18,9 @@ jobs:
         with:
           node-version: 24
       - run: npm ci
-      - run: npm run build
+      - run: BASE_PATH=/${{ github.event.repository.name }}/ npm run build
       - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          destination_dir: .
           publish_branch: gh-pages
