@@ -102,33 +102,33 @@ export default function SortableSection({ item }: SortableSectionProps) {
   const { isExporting } = useContext(ExportContext)!;
   const { setContent } = useContext(ContentContext)!;
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: item.id });
-  const style: CSSProperties = {
-    position: 'relative',
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
   const renderedContent = getRenderedContent(item);
   const extraActions = getActions(item, setContent);
 
   return (
-    <table
-      ref={setNodeRef}
-      style={style}
-      className={twMerge(!isExporting && "border border-gray-100 p-1")}
-      {...attributes}
-    >
-      {!isExporting && (
-        <GoGrabber {...listeners} size={32} className="absolute top-1/2 -translate-y-1/2 left-[-50px] cursor-grab" />
-      )}
-      {renderedContent}
-      {!isExporting && (
-        <table className="absolute top-1/2 -translate-y-1/2 left-[590px] cursor-pointer text-gray-400 flex  gap-1">
-          {extraActions.map(({ Icon, action }, idx) => (
-            <Icon key={idx} size={20} onClick={action} />
-          ))}
-        </table>
-      )}
-    </table>
+    <tr>
+      <td
+        ref={setNodeRef}
+        style={{
+          position: 'relative',
+          transform: CSS.Transform.toString(transform),
+          transition: transition,
+          padding: isExporting ? '' : '0px 16px'
+        }}
+        {...attributes}
+      >
+        {!isExporting && (
+          <GoGrabber {...listeners} size={32} className="absolute top-1/2 -translate-y-1/2 left-[-50px] cursor-grab" />
+        )}
+        {renderedContent}
+        {!isExporting && (
+          <table className="absolute top-1/2 -translate-y-1/2 left-[590px] cursor-pointer text-gray-400 flex  gap-1">
+            {extraActions.map(({ Icon, action }, idx) => (
+              <Icon key={idx} size={20} onClick={action} />
+            ))}
+          </table>
+        )}
+      </td>
+    </tr>
   );
 };
