@@ -49,7 +49,7 @@ export default function Text({ id }: { id: string }) {
   };
 
   return (
-    <table id={`quill-container-${id}`} style={{ width: '100%' }}>
+    <div id={`quill-container-${id}`}>
       <ReactQuill style={{ fontSize: '12px' }}
         value={value}
         onChange={handleChange}
@@ -59,6 +59,6 @@ export default function Text({ id }: { id: string }) {
         formats={formats}
         bounds={`#quill-container-${id}`}
       />
-    </table>
+    </div>
   );
 }

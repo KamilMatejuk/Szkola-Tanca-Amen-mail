@@ -20,7 +20,7 @@ export default function Separator({ id }: { id: string }) {
   const showBottom = variant !== 'top';
   
   return (
-    <table
+    <div
       style={{
         height: showTop && showBottom ? '96px' : '48px',
         gap: '16px',
@@ -34,6 +34,6 @@ export default function Separator({ id }: { id: string }) {
     >
       {showTop && <SeparatorSVG style={{ ...separatorStyle}} />}
       {showBottom && <SeparatorSVG style={{ ...separatorStyle, transform: 'rotate(180deg)' }} />}
-    </table>
+    </div>
   );
 }

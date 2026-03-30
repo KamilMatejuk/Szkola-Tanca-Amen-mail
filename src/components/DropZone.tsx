@@ -4,31 +4,29 @@ import { ExportContext } from "../context/ExportContext";
 
 const classes = {
   base: twMerge(
-    "w-[calc(100%-32px)] mx-4 flex items-center justify-center text-sm",
+    "w-full flex items-center justify-center text-sm",
     "text-gray-300 cursor-pointer overflow-hidden",
-    "border-dashed border-2 rounded",
+    "border-dashed border-2 border-gray-200 rounded",
     "transition-all duration-500"
   ),
-  dragging: "h-8 my-1 border-gray-200",
-  notDragging: "h-0 my-0 border-white"
+  dragging: "h-8 my-[1px]",
+  notDragging: "h-0 border-white"
 };
 
 interface DropZoneProps {
   isDragging: boolean;
-  onDrop: (e: DragEvent<HTMLTableCellElement>) => void;
+  onDrop: (e: DragEvent<HTMLDivElement>) => void;
 }
 
 export default function DropZone({ isDragging, onDrop }: DropZoneProps) {
   const { isExporting } = useContext(ExportContext)!;
   return isExporting ? null : (
-    <tr>
-      <td
-        className={twMerge(classes.base, isDragging ? classes.dragging : classes.notDragging)}
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={onDrop}
-      >
-        {isDragging ? "Upuść sekcję" : ""}
-      </td>
-    </tr>
+    <div
+      className={twMerge(classes.base, isDragging ? classes.dragging : classes.notDragging)}
+      onDrop={onDrop}
+      onDragOver={(e) => e.preventDefault()}
+    >
+      {isDragging ? "Upuść sekcję" : ""}
+    </div>
   );
 }

@@ -79,17 +79,20 @@ export default function Editor() {
       collisionDetection={closestCenter}
       onDragEnd={(event) => handleDragEnd(event)}
     >
-      <SortableContext items={content.map(s => s.id)}>
-        <table id="editor-root" style={{
-          backgroundColor: isExporting ? '#ccc' : '',
-        }}>
-          <tbody style={{
-            width: `${BANNER_WIDTH}px`,
-            margin: isExporting ? 'auto' : '',
-            border: isExporting ? '' : '1px solid #D1D5DB',
-            backgroundColor: '#ffffff',
-            borderRadius: '4px',
-          }}>
+      <div id="editor-root" style={{
+        boxSizing: 'border-box',
+        margin: isExporting ? 'auto' : '',
+        width: isExporting ? `${BANNER_WIDTH}px` : '600px',
+        padding: isExporting ? '0px' : '16px',
+        backgroundColor: '#ffffff',
+        border: isExporting ? '' : '1px solid #D1D5DB',
+        borderRadius: '4px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1px',
+      }}>
+        <SortableContext items={content.map(s => s.id)}>
+          <>
             <DropZone onDrop={(e) => handleDropAt(0, e)} isDragging={isDragging || content.length == 0} />
             {content.flatMap((section, idx) => (
               <Fragment key={section.id}>
@@ -103,9 +106,9 @@ export default function Editor() {
                   isDragging={isDragging} />
               </Fragment>
             ))}
-          </tbody>
-        </table>
-      </SortableContext>
+          </>
+        </SortableContext>
+      </div>
     </DndContext>
   );
 };

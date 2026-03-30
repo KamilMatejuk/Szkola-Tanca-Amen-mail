@@ -7,6 +7,8 @@ export default function Banner({ id }: { id: string }) {
   const item = content.find((item) => item.id === id);
   const src = item?.content;
   return (
-    <img src={src} alt="Banner" style={{ width: `${BANNER_WIDTH}px`, height: 'auto' }} />
+    <div style={{ width: `${BANNER_WIDTH}px` }}>
+      <img src={src} alt="Banner" style={{ width: '100%', height: 'auto' }} />
+    </div>
   );
 }
