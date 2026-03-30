@@ -1,14 +1,21 @@
+> [!WARNING]
+> Project paused due to no support from Gmail.
+> Gmail strips eveything that's not text.
+
+> [!NOTE]
+> Probably required to work:
+> * replace `div` with `table` layout
+> * remove `svg` (separators and icons)
+> * use public images instead of Base64
+
 # Amen Mail
 
-A simple single‑page editor that stores content in the browser’s local storage. The project is built with Vite + React and is ready to be deployed to GitHub Pages.
+A simple single‑page editor that stores content in the browser’s local storage.
 
 ## Development
 
 ```bash
-# Install dependencies
 npm ci
-
-# Start the dev server
 npm run dev
 ```
 
